@@ -17,4 +17,8 @@ export class Plant {
 
   @Column({ name: 'adoption_date' })
   adoptionDate: Date;
+
+  constructor(plant: Partial<Plant>) {
+    Object.assign(this, plant);
+  }
 }
