@@ -1,0 +1,10 @@
+services:
+  mysql:
+    image: mysql
+    env_file:
+      - .env
+    ports:
+      - '${DB_PORT}:${DB_PORT}'
+    expose:
+      # Opens port 3306 on the container
+      - '${DB_PORT}'
