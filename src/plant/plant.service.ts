@@ -1,9 +1,9 @@
 // src/plant/plant.service.ts
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Plant } from '../entities/plant.entity';
 import { CreatePlantEvent } from 'src/events/create-plant.event';
 import { PLANT_REPOSITORY_TOKEN } from 'src/tokens';
+import { Plant } from './plant.entity';
 
 @Injectable()
 export class PlantService {
