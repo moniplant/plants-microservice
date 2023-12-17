@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
-import { Plant } from '../entities/plant.entity';
 import { PLANT_REPOSITORY_TOKEN, DATA_SOURCE_TOKEN } from 'src/tokens';
+import { Plant } from './plant.entity';
 
 export const plantProviders = [
   {
