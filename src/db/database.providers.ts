@@ -8,7 +8,7 @@ export const databaseProviders = [
     inject: [ConfigService],
     useFactory: async (configService: ConfigService) => {
       const dataSource = new DataSource({
-        type: configService.get<string>('DB_TYPE') as "mysql" | "mariadb",
+        type: configService.get<string>('DB_TYPE') as 'mysql' | 'mariadb',
         host: configService.get<string>('DB_HOST'),
         port: configService.get<number>('DB_PORT'),
         username: configService.get<string>('MYSQL_USER'),
