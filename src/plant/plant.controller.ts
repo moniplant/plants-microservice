@@ -1,5 +1,5 @@
 // src/plant/plant.controller.ts
-import { Controller, Logger } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { PlantService } from './plant.service';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { CREATE_PLANT } from 'src/events';
@@ -10,7 +10,6 @@ export class PlantController {
 
   @EventPattern(CREATE_PLANT)
   handleCreatePlant(@Payload() data: any) {
-    Logger.log('Saving in DB ', data);
-    this.plantService.handleCreatePlant(data.value);
+    this.plantService.handleCreatePlant(data);
   }
 }

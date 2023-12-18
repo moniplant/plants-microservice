@@ -14,6 +14,6 @@ export class PlantService {
 
   handleCreatePlant(data: CreatePlantEvent) {
     const plant = new Plant(data);
-    return this.plantRepository.save(plant);
+    this.plantRepository.save(plant);
   }
 }
