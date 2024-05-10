@@ -1,6 +1,6 @@
 version: 'latest'
 services:
-  db:
+  database:
     image: mysql:latest
     restart: always
     container_name: database
@@ -23,7 +23,7 @@ services:
       timeout: 5s
       retries: 55
     networks:
-      - localnet
+      - gateway-microservice_localnet
   plants_app:
     container_name: plants_app
     build:
@@ -34,10 +34,10 @@ services:
     volumes:
       - ./src:/usr/src/app/plants/src
     depends_on:
-      db:
+      database:
         condition: service_healthy
     networks:
-      - localnet
+      - gateway-microservice_localnet
   phpmyadmin:
     image: phpmyadmin
     container_name: phpmyadmin
@@ -45,13 +45,13 @@ services:
     ports:
       - 8080:80
     environment:
-      - PMA_HOST=db
+      - PMA_HOST=database
     depends_on:
-      db:
+      database:
         condition: service_healthy
     networks:
-      - localnet
+      - gateway-microservice_localnet
 
 networks:
-  localnet:
-    driver: bridge
+  gateway-microservice_localnet:
+    external: true
