@@ -1,6 +1,9 @@
+version: 'latest'
 services:
-  mysql:
-    image: mysql:8.0.34
+  db:
+    image: mysql:latest
+    restart: always
+    container_name: database
     env_file:
       - .env
     ports:
@@ -8,3 +11,47 @@ services:
     expose:
       # Opens port 3306 on the container
       - '${DB_PORT}'
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 55
+    networks:
+      - localnet
+  plants_app:
+    container_name: plants_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '4000:3000'
+    volumes:
+      - ./src:/usr/src/app/plants/src
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - localnet
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=db
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - localnet
+
+networks:
+  localnet:
+    driver: bridge
