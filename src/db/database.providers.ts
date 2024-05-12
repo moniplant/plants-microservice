@@ -11,9 +11,9 @@ export const databaseProviders = [
         type: configService.get<string>('DB_TYPE') as 'mysql' | 'mariadb',
         host: configService.get<string>('DB_HOST'),
         port: configService.get<number>('DB_PORT'),
-        username: configService.get<string>('MYSQL_USER'),
-        password: configService.get<string>('MYSQL_ROOT_PASSWORD'),
-        database: configService.get<string>('MYSQL_DATABASE'),
+        username: configService.get<string>('DB_ROOT_USERNAME'),
+        password: configService.get<string>('DB_ROOT_PASSWORD'),
+        database: configService.get<string>('DB_DATABASE_NAME'),
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: true,
       });
