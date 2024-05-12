@@ -1,8 +1,8 @@
 // src/plant/plant.controller.ts
-import { Controller, Logger } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { PlantService } from './plant.service';
-import { EventPattern, Payload } from '@nestjs/microservices';
-import { CREATE_PLANT } from 'src/events';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
+import { CREATE_PLANT, LIST_PLANTS } from 'src/events';
 
 @Controller()
 export class PlantController {
@@ -10,7 +10,11 @@ export class PlantController {
 
   @EventPattern(CREATE_PLANT)
   handleCreatePlant(@Payload() data: any) {
-    Logger.log('Received new payload: ', data);
     this.plantService.handleCreatePlant(data);
+  }
+
+  @MessagePattern(LIST_PLANTS)
+  handleListPlant(@Payload() _data: any) {
+    return this.plantService.findAll();
   }
 }

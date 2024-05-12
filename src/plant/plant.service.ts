@@ -1,5 +1,5 @@
 // src/plant/plant.service.ts
-import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { CreatePlantEvent } from 'src/events/create-plant.event';
 import { PLANT_REPOSITORY_TOKEN } from 'src/tokens';
