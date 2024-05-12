@@ -15,7 +15,11 @@ export class Plant {
   @Column()
   location: string;
 
-  @Column({ name: 'adoption_date', nullable: true })
+  @Column({
+    name: 'adoption_date',
+    type: 'datetime',
+    default: () => 'NOW()',
+  })
   adoptionDate: Date;
 
   constructor(plant: Partial<Plant>) {
