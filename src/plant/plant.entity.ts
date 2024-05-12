@@ -15,7 +15,7 @@ export class Plant {
   @Column()
   location: string;
 
-  @Column({ name: 'adoption_date' })
+  @Column({ name: 'adoption_date', nullable: true })
   adoptionDate: Date;
 
   constructor(plant: Partial<Plant>) {
