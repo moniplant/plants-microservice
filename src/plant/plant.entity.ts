@@ -13,6 +13,9 @@ export class Plant {
   description: string;
 
   @Column()
+  plant_type: string;
+
+  @Column()
   location: string;
 
   @Column({

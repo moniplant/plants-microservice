@@ -24,6 +24,7 @@ export class PlantService implements OnModuleInit {
       new Plant({
         name: 'My plant',
         description: 'The plant in my window',
+        plant_type: 'Aloe',
         location: 'Window 1',
       }),
     );
@@ -31,6 +32,7 @@ export class PlantService implements OnModuleInit {
       new Plant({
         name: 'Ginko Bilboa',
         description: 'Origin from China',
+        plant_type: 'Cactus',
         location: 'Window 2',
       }),
     );
