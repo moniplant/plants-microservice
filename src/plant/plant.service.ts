@@ -1,14 +1,14 @@
 // src/plant/plant.service.ts
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { CreatePlantEvent } from 'src/events/create-plant.event';
-import { PLANT_REPOSITORY_TOKEN } from 'src/tokens';
 import { Plant } from './plant.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class PlantService implements OnModuleInit {
   constructor(
-    @Inject(PLANT_REPOSITORY_TOKEN)
+    @InjectRepository(Plant)
     private readonly plantRepository: Repository<Plant>,
   ) {}
 
