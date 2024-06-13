@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
 import { PlantTypeModule } from './plant_types/plant.type.module';
+import { SensorModule } from './sensor/sensor.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { PlantTypeModule } from './plant_types/plant.type.module';
     }),
     PlantModule,
     PlantTypeModule,
+    SensorModule,
   ],
 })
 export class AppModule {}
