@@ -4,16 +4,21 @@ import { Repository } from 'typeorm';
 import { CreatePlantEvent } from 'src/events/create-plant.event';
 import { Plant } from './plant.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PlantTypeService } from '../plant_types/plant.type.service';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class PlantService implements OnModuleInit {
   constructor(
     @InjectRepository(Plant)
     private readonly plantRepository: Repository<Plant>,
+    private readonly plantTypeService: PlantTypeService,
   ) {}
 
   async onModuleInit() {
-    await this.createDefaultPlants();
+    await lastValueFrom(this.plantTypeService.plantTypesInitiated).then(
+      async () => await this.createDefaultPlants(),
+    );
   }
 
   async createDefaultPlants() {
@@ -24,7 +29,7 @@ export class PlantService implements OnModuleInit {
       new Plant({
         name: 'My plant',
         description: 'The plant in my window',
-        plant_type: 'Aloe',
+        plantTypeAlias: 'Aloe',
         location: 'Window 1',
       }),
     );
@@ -32,7 +37,7 @@ export class PlantService implements OnModuleInit {
       new Plant({
         name: 'Ginko Bilboa',
         description: 'Origin from China',
-        plant_type: 'Cactus',
+        plantTypeAlias: 'Cactus',
         location: 'Window 2',
       }),
     );

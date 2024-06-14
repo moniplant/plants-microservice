@@ -1,11 +1,9 @@
 // src/plant/plant.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
+import { Plant } from '../plant/plant.entity';
 
 @Entity('plant_types')
 export class PlantType {
-  @PrimaryGeneratedColumn()
-  id: number;
-
   @PrimaryColumn({ unique: true })
   alias: string;
 
@@ -14,6 +12,9 @@ export class PlantType {
 
   @Column({ length: 600, nullable: true })
   description: string;
+
+  @OneToMany(() => Plant, (plant) => plant.plantType)
+  plants: Plant[];
 
   constructor(plantType: Partial<PlantType>) {
     Object.assign(this, plantType);

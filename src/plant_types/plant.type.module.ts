@@ -8,5 +8,6 @@ import { PlantTypeController } from './plant.type.controller';
   imports: [TypeOrmModule.forFeature([PlantType])],
   controllers: [PlantTypeController],
   providers: [PlantTypeService],
+  exports: [PlantTypeService],
 })
 export class PlantTypeModule {}

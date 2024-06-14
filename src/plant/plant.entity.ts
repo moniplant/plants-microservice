@@ -1,5 +1,13 @@
 // src/plant/plant.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
+import { Sensor } from '../sensor/entities/sensor.entity';
+import { PlantType } from '../plant_types/plant.type.entity';
 
 @Entity('plants')
 export class Plant {
@@ -12,8 +20,8 @@ export class Plant {
   @Column({ length: 200 })
   description: string;
 
-  @Column()
-  plant_type: string;
+  @Column({ nullable: true })
+  plantTypeAlias: string;
 
   @Column()
   location: string;
@@ -24,6 +32,14 @@ export class Plant {
     default: () => 'NOW()',
   })
   adoptionDate: Date;
+
+  @ManyToOne(() => PlantType, (plantType) => plantType.plants, {
+    onDelete: 'SET NULL',
+  })
+  plantType: PlantType;
+
+  @OneToMany(() => Sensor, (sensor) => sensor.plant)
+  sensors: Sensor[];
 
   constructor(plant: Partial<Plant>) {
     Object.assign(this, plant);

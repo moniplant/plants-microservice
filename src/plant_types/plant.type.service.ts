@@ -4,9 +4,11 @@ import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PlantType } from './plant.type.entity';
 import { PLANT_TYPES } from './plant.type.constant';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable()
 export class PlantTypeService implements OnModuleInit {
+  plantTypesInitiated = new ReplaySubject<void>();
   constructor(
     private dataSource: DataSource,
     @InjectRepository(PlantType)
@@ -15,14 +17,13 @@ export class PlantTypeService implements OnModuleInit {
 
   async onModuleInit() {
     await this.populateDB();
+    this.plantTypesInitiated.next();
+    this.plantTypesInitiated.complete();
   }
 
   async populateDB() {
     const dbRows = (await this.plantTypeRepository.find()).length;
     if (dbRows === PLANT_TYPES.length) return;
-
-    // If the plant_types is updated, we need to updated also the DB
-    this.plantTypeRepository.clear();
 
     // Empty DB, we should populate with default plant types
     const queryRunner =
@@ -55,8 +56,8 @@ export class PlantTypeService implements OnModuleInit {
     return this.plantTypeRepository.find();
   }
 
-  findOne(id: number): Promise<PlantType | null> {
-    return this.plantTypeRepository.findOneBy({ id });
+  findOne(alias: string): Promise<PlantType | null> {
+    return this.plantTypeRepository.findOneBy({ alias });
   }
 
   async remove(id: number): Promise<void> {
