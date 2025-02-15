@@ -48,7 +48,7 @@ export class PlantTypeService implements OnModuleInit {
     }
   }
 
-  handleCreatePlant(_data: any) {
+  handleCreatePlantType(_data: any) {
     //
   }
 

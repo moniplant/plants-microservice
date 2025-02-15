@@ -8,12 +8,12 @@ export class PlantTypeController {
   constructor(private readonly plantTypeService: PlantTypeService) {}
 
   @EventPattern(CREATE_PLANT_TYPE)
-  handleCreatePlant(@Payload() data: any) {
-    this.plantTypeService.handleCreatePlant(data);
+  handleCreatePlantType(@Payload() data: any) {
+    this.plantTypeService.handleCreatePlantType(data);
   }
 
   @MessagePattern(LIST_PLANT_TYPES)
-  handleListPlant(@Payload() _data: any) {
+  handleListPlantTypes(@Payload() _data: any) {
     return this.plantTypeService.findAll();
   }
 }
