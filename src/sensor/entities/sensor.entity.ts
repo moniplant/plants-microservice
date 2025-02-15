@@ -1,11 +1,10 @@
-import { Column, Entity, Index, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 import { Plant } from '../../plant/plant.entity';
 
 @Entity('sensors')
 export class Sensor {
-  @Column()
-  @Index({ unique: true })
-  @PrimaryColumn()
+  @PrimaryColumn({ unique: true })
   id: string;
 
   @Column()
@@ -26,6 +25,7 @@ export class Sensor {
   plant: Plant;
 
   constructor(sensor: Partial<Sensor>) {
+    this.id = sensor?.id || uuidv4(); // Generate a UUID if `id` is not provided
     Object.assign(this, sensor);
   }
 }
