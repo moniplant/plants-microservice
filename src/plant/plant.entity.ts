@@ -1,18 +1,21 @@
 // src/plant/plant.entity.ts
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   OneToMany,
   ManyToOne,
+  Index,
+  PrimaryColumn,
 } from 'typeorm';
 import { Sensor } from '../sensor/entities/sensor.entity';
 import { PlantType } from '../plant_types/plant.type.entity';
 
 @Entity('plants')
 export class Plant {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @Column()
+  @Index({ unique: true })
+  @PrimaryColumn()
+  id: string;
 
   @Column({ length: 30 })
   name: string;

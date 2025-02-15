@@ -1,10 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Plant } from '../../plant/plant.entity';
 
-@Entity()
+@Entity('sensors')
 export class Sensor {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @Column()
+  @Index({ unique: true })
+  @PrimaryColumn()
+  id: string;
 
   @Column()
   label: string;
@@ -16,10 +18,14 @@ export class Sensor {
   unit: string;
 
   @Column({ nullable: true })
-  plantId: number;
+  plant_id: string;
 
   @ManyToOne(() => Plant, (plant) => plant.sensors, {
     onDelete: 'SET NULL',
   })
   plant: Plant;
+
+  constructor(sensor: Partial<Sensor>) {
+    Object.assign(this, sensor);
+  }
 }

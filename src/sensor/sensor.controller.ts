@@ -1,8 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { SensorService } from './sensor.service';
-import { CreateSensorDto } from './dto/create-sensor.dto';
-import { UpdateSensorDto } from './dto/update-sensor.dto';
 import {
   CREATE_SENSOR,
   DELETE_SENSOR,
@@ -10,14 +8,21 @@ import {
   RETRIEVE_SENSOR,
   UPDATE_SENSOR,
 } from '../events';
+import { CreateorUpdateSensorEvent } from './events/create-or-update-sensor.event';
 
 @Controller()
 export class SensorController {
   constructor(private readonly sensorService: SensorService) {}
 
   @MessagePattern(CREATE_SENSOR)
-  create(@Payload() createSensorDto: CreateSensorDto) {
-    return this.sensorService.create(createSensorDto);
+  create(@Payload() createSensorEvent: CreateorUpdateSensorEvent) {
+    return this.sensorService.create({
+      id: createSensorEvent.id,
+      label: createSensorEvent.label,
+      plant_id: createSensorEvent.plant_id,
+      quantity: createSensorEvent.quantity,
+      unit: createSensorEvent.unit,
+    });
   }
 
   @MessagePattern(LIST_PLANT_SENSORS)
@@ -26,17 +31,22 @@ export class SensorController {
   }
 
   @MessagePattern(RETRIEVE_SENSOR)
-  findOne(@Payload() id: number) {
+  findOne(@Payload() id: string) {
     return this.sensorService.findOne(id);
   }
 
   @MessagePattern(UPDATE_SENSOR)
-  update(@Payload() updateSensorDto: UpdateSensorDto) {
-    return this.sensorService.update(updateSensorDto.id, updateSensorDto);
+  update(@Payload() updateSensorEvent: CreateorUpdateSensorEvent) {
+    return this.sensorService.update(updateSensorEvent.id, {
+      label: updateSensorEvent.label,
+      plant_id: updateSensorEvent.plant_id,
+      quantity: updateSensorEvent.quantity,
+      unit: updateSensorEvent.unit,
+    });
   }
 
   @MessagePattern(DELETE_SENSOR)
-  remove(@Payload() id: number) {
+  remove(@Payload() id: string) {
     return this.sensorService.remove(id);
   }
 }

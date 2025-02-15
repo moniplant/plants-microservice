@@ -1,7 +1,7 @@
 // src/plant/plant.service.ts
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { CreatePlantEvent } from 'src/events/create-plant.event';
+import { CreatePlantEvent } from 'src/plant/events/create-plant.event';
 import { Plant } from './plant.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PlantTypeService } from '../plant_types/plant.type.service';
@@ -47,15 +47,16 @@ export class PlantService implements OnModuleInit {
     const plant = new Plant(data);
     this.plantRepository.save(plant);
   }
+
   findAll(): Promise<Plant[]> {
     return this.plantRepository.find();
   }
 
-  findOne(id: number): Promise<Plant | null> {
+  findOne(id: string): Promise<Plant | null> {
     return this.plantRepository.findOneBy({ id });
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.plantRepository.delete(id);
   }
 }
