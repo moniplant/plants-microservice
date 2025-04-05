@@ -35,4 +35,10 @@ export const PLANT_TYPES: PlantTypeDto[] = [
     alias: 'Pilea',
     full_name: 'Pilea plant',
   },
+  {
+    alias: 'Persea',
+    full_name: 'Avocado tree',
+    description:
+      'A fast-growing, evergreen tree native to Central and South America, known for producing the nutrient-rich avocado fruit. It belongs to the laurel family and thrives in warm climates. The tree can grow up to 20 meters tall and has broad, glossy leaves and greenish-yellow flowers.',
+  },
 ];
