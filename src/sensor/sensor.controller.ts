@@ -19,27 +19,27 @@ export class SensorController {
     return this.sensorService.create({
       id: createSensorEvent.id,
       label: createSensorEvent.label,
-      plant_id: createSensorEvent.plant_id,
+      plantId: createSensorEvent.plant_id,
       quantity: createSensorEvent.quantity,
       unit: createSensorEvent.unit,
     });
   }
 
   @MessagePattern(LIST_PLANT_SENSORS)
-  findAll() {
-    return this.sensorService.findAll();
+  findAll(@Payload() plantId: { id: string }) {
+    return this.sensorService.findAll(plantId.id);
   }
 
   @MessagePattern(RETRIEVE_SENSOR)
-  findOne(@Payload() id: string) {
-    return this.sensorService.findOne(id);
+  findOne(@Payload() sensorId: { id: string }) {
+    return this.sensorService.findOne(sensorId.id);
   }
 
   @MessagePattern(UPDATE_SENSOR)
   update(@Payload() updateSensorEvent: CreateorUpdateSensorEvent) {
     return this.sensorService.update(updateSensorEvent.id, {
       label: updateSensorEvent.label,
-      plant_id: updateSensorEvent.plant_id,
+      plantId: updateSensorEvent.plant_id,
       quantity: updateSensorEvent.quantity,
       unit: updateSensorEvent.unit,
     });

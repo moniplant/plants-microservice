@@ -17,12 +17,14 @@ export class SensorService {
     this.sensorRepository.save(sensor);
   }
 
-  findAll(): Promise<Sensor[]> {
-    return this.sensorRepository.find();
+  findAll(plantId: string): Promise<Sensor[]> {
+    return this.sensorRepository.find({
+      where: { plantId },
+    });
   }
 
-  findOne(id: string): Promise<Sensor | null> {
-    return this.sensorRepository.findOneBy({ id });
+  findOne(sensorId: string): Promise<Sensor | null> {
+    return this.sensorRepository.findOneBy({ id: sensorId });
   }
 
   async update(id: string, updateSensorDto: UpdateSensorDto): Promise<Sensor> {

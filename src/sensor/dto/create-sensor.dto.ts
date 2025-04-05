@@ -21,7 +21,7 @@ export class CreateSensorDto {
     description:
       'This is the identifier of the plant to which the sensor is assigned',
   })
-  plant_id: string;
+  plantId: string;
   @IsString()
   @ApiProperty({
     type: String,

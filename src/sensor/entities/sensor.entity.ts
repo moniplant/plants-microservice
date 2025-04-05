@@ -17,7 +17,7 @@ export class Sensor {
   unit: string;
 
   @Column({ nullable: true })
-  plant_id: string;
+  plantId: string;
 
   @ManyToOne(() => Plant, (plant) => plant.sensors, {
     onDelete: 'SET NULL',
