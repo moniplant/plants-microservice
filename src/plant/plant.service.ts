@@ -1,11 +1,11 @@
 // src/plant/plant.service.ts
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { CreatePlantEvent } from 'src/plant/events/create-plant.event';
+import { CreateorUpdatePlantEvent } from 'src/plant/events/create-plant.event';
 import { Plant } from './plant.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PlantTypeService } from '../plant_types/plant.type.service';
-import { lastValueFrom } from 'rxjs';
+//import { lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class PlantService implements OnModuleInit {
@@ -16,9 +16,9 @@ export class PlantService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    await lastValueFrom(this.plantTypeService.plantTypesInitiated).then(
+    /*await lastValueFrom(this.plantTypeService.plantTypesInitiated).then(
       async () => await this.createDefaultPlants(),
-    );
+    );*/
   }
 
   async createDefaultPlants() {
@@ -43,7 +43,7 @@ export class PlantService implements OnModuleInit {
     );
   }
 
-  handleCreatePlant(data: CreatePlantEvent) {
+  handleCreatePlant(data: CreateorUpdatePlantEvent) {
     const plant = new Plant(data);
     this.plantRepository.save(plant);
   }
