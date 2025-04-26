@@ -1,5 +1,10 @@
 services:
-  # on the rpi, we totally ignore the monitoring app phpmyadmin, we dont need it there to debug since its our prod env
+  plants-microservice:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod # Use Dockerfile.prod for production
+    environment:
+      NODE_ENV: production
   database:
-    image: yobasystems/alpine-mariadb #armv7 mysql docker image
+    image: yobasystems/alpine-mariadb # ARMv7 MySQL Docker image
   phpmyadmin: !reset
