@@ -1,0 +1,3 @@
+services:
+  # on the rpi, we totally ignore the monitoring app phpmyadmin, we dont need it there to debug since its our prod env
+  phpmyadmin: !reset

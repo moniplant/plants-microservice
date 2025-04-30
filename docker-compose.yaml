@@ -37,6 +37,24 @@ services:
         condition: service_healthy
     networks:
       - gateway-microservice_localnet
+    profiles:
+      - dev  # Development profile
+  plants_app_prod:
+    container_name: plants_app_prod
+    build:
+      context: .
+      dockerfile: Dockerfile.prod  # Production Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - '4000:3000'
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - gateway-microservice_localnet
+    profiles:
+      - prod  # Production profile
   phpmyadmin:
     image: phpmyadmin
     container_name: phpmyadmin
