@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import { SensorService } from './sensor.service';
 import {
   CREATE_SENSOR,
@@ -35,9 +35,9 @@ export class SensorController {
     return this.sensorService.findOne(sensorId.id);
   }
 
-  @MessagePattern(UPDATE_SENSOR)
+  @EventPattern(UPDATE_SENSOR)
   update(@Payload() updateSensorEvent: CreateorUpdateSensorEvent) {
-    return this.sensorService.update(updateSensorEvent.id, {
+    this.sensorService.update(updateSensorEvent.id, {
       label: updateSensorEvent.label,
       plantId: updateSensorEvent.plant_id,
       quantity: updateSensorEvent.quantity,
@@ -45,8 +45,8 @@ export class SensorController {
     });
   }
 
-  @MessagePattern(DELETE_SENSOR)
+  @EventPattern(DELETE_SENSOR)
   remove(@Payload() id: string) {
-    return this.sensorService.remove(id);
+    this.sensorService.remove(id);
   }
 }
