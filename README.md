@@ -15,3 +15,5 @@ Made easy with docker compose, run: `docker compose up` for running all services
 - The plants service will listen through port 4000
 - mysql db running under port: 3306
 
+#### Devlopment environment:
+`docker compose --profile dev up` to launch the services in dev mode (launches the microservice too)
